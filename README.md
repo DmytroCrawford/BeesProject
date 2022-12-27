@@ -8,7 +8,7 @@
     I decided to explore the Plotly library and will continue on my next personal project.
     This project explores a Bees database and visualized the negative ways in which bees are effected in america today
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://plotly.com/"><strong>Explore the plotly docs »</strong></a>
     <br />
     <h2> Examples: </h2>
     <img width="847" alt="Screenshot 2022-12-26 at 8 42 33 PM" src="https://user-images.githubusercontent.com/74217403/209598767-2c75960f-636e-4440-b548-57147018edc4.png">
