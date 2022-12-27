@@ -21,20 +21,21 @@ app.layout = html.Div([
 
     dcc.Dropdown(id="slct_year",
                  options=[
-                     {"label": "2015", "value": 2015},
-                     {"label": "2016", "value": 2016},
-                     {"label": "2017", "value": 2017},
-                     {"label": "2018", "value": 2018}
+                     {"label": "Disease", "value": "Disease"},
+                     {"label": "Other", "value": "Other"},
+                     {"label": "Pesticides", "value": "Pesticides"},
+                     {"label": "Pests_excl_Varroa", "value": "Pests_excl_Varroa"},
+                     {"label": "Unknown", "value": "Unknown"},
+                     {"label": "Varroa_mites", "value": "Varroa_mites"},
                  ],
                  multi=False,
-                 value=2015,
+                 value="Varroa_mites",
                  style={'width': "40%"}),
 
     html.Div(id='output_container', children=[]),
     html.Br(),
 
     dcc.Graph(id='my_bee_map', figure={})
-
 ])
 
 # Callback Function
@@ -44,6 +45,7 @@ app.layout = html.Div([
      Output(component_id='my_bee_map', component_property='figure')],
     [Input(component_id='slct_year', component_property='value')]
 )
+
 def update_graph(option_slctd):
     print(option_slctd)
     print(type(option_slctd))
@@ -51,44 +53,20 @@ def update_graph(option_slctd):
     container = "The year chosen by the user was: {}".format(option_slctd)
 
     dff = df.copy()
-    dff = dff[dff["Year"] == option_slctd]
-    dff = dff[dff["Affected by"] == "Varroa_mites"]
+    dff = dff[dff["Affected by"] == option_slctd]
 
     # Plotly Express
 
-    """
 
-    fig = px.choropleth(
-        data_frame=dff,
-        locationmode='USA-states',
-        locations='state_code',
-        scope="usa",
-        color='Pct of Colonies Impacted',
-        hover_data=['State', 'Pct of Colonies Impacted'],
-        color_continuous_scale=px.colors.sequential.YlOrBr,
-        labels={'Pct of Colonies Impacted': '% of Bee Colonies'},
-        # template='plotly_dark'
+    fig = px.line(
+        dff,
+        x="Year",
+        y="Pct of Colonies Impacted",
+        color='state_code'
     )
 
-    """
 
     # Graph Opjects
-
-    fig = go.Figure(
-        data=[go.Choropleth(
-            locationmode='USA-states',
-            locations=dff['state_code'],
-            z=dff["Pct of Colonies Impacted"].astype(float),
-            colorscale='Blues',
-        )]
-    )
-    fig.update_layout(
-        title_text="Bees Affected by Mites in the USA",
-        title_xanchor="center",
-        title_font=dict(size=24),
-        title_x=0.5,
-        geo=dict(scope='usa'),
-    )
 
     return container, fig
 

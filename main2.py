@@ -56,39 +56,21 @@ def update_graph(option_slctd):
 
     # Plotly Express
 
-    """
 
-    fig = px.choropleth(
+    fig = px.bar(
         data_frame=dff,
-        locationmode='USA-states',
-        locations='state_code',
-        scope="usa",
-        color='Pct of Colonies Impacted',
+        #x='USA-states',
+        x='state_code',
+        y='Pct of Colonies Impacted',
+        title="Bees Affected by Mites in the USA",
         hover_data=['State', 'Pct of Colonies Impacted'],
         color_continuous_scale=px.colors.sequential.YlOrBr,
         labels={'Pct of Colonies Impacted': '% of Bee Colonies'},
         # template='plotly_dark'
     )
 
-    """
 
     # Graph Opjects
-
-    fig = go.Figure(
-        data=[go.Choropleth(
-            locationmode='USA-states',
-            locations=dff['state_code'],
-            z=dff["Pct of Colonies Impacted"].astype(float),
-            colorscale='Blues',
-        )]
-    )
-    fig.update_layout(
-        title_text="Bees Affected by Mites in the USA",
-        title_xanchor="center",
-        title_font=dict(size=24),
-        title_x=0.5,
-        geo=dict(scope='usa'),
-    )
 
     return container, fig
 
